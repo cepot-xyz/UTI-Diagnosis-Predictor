@@ -1,47 +1,45 @@
-# Studi Kasus Analisis: Pengaruh Gejala (Suhu Tubuh, Nyeri Lumbar, dan Micturition Pains) Terhadap Kemungkinan Kejadian Inflamasi Saluran Kemih Bawah dan Atas
+# Studi Kasus Data Mining: Klasifikasi Diagnosis Infeksi Saluran Kemih Menggunakan Algoritma C4.5
 
 ## 1. Pendahuluan
 
-Infeksi Saluran Kemih (ISK) merupakan salah satu diagnosis rawat jalan yang paling umum dan dapat diklasifikasikan menjadi ISK Bawah (seperti radang kandung kemih/sistitis) dan ISK Atas (seperti radang ginjal/pielonefritis atau nefropati origin pelvis ginjal). Membedakan kedua kondisi ini sangat krusial karena ISK Atas sering kali membutuhkan pengobatan yang lebih intensif dan berisiko komplikasi yang lebih serius.
+Infeksi Saluran Kemih (ISK) adalah diagnosis umum yang memerlukan penentuan lokasi infeksi (ISK Bawah atau ISK Atas) untuk manajemen klinis yang optimal. ISK Bawah (radang kandung kemih/sistitis) dan ISK Atas (nefropati origin pelvis ginjal/pielonefritis) memiliki risiko dan protokol penanganan yang berbeda.
 
-Meskipun diagnosis definitif memerlukan kultur urin, penentuan awal diagnosis di fasilitas kesehatan primer sangat bergantung pada interpretasi gejala klinis. Studi kasus ini bertujuan untuk memanfaatkan data rekam medis pasien untuk mengidentifikasi dan mengukur seberapa besar tiga gejala utama—**Suhu Tubuh**, **Nyeri Lumbar**, dan **Nyeri saat Berkemih (Micturition Pains)**—memengaruhi kemungkinan pasien didiagnosis dengan salah satu dari dua kondisi tersebut.
+Studi kasus ini berfokus pada pengembangan **model prediktif** menggunakan teknik **Data Mining** untuk membedakan kedua kondisi tersebut. Model akan memanfaatkan gejala klinis spesifik—seperti **Suhu Tubuh**, **Nyeri Lumbar**, dan **Nyeri saat Berkemih (Micturition Pains)**—sebagai fitur masukan utama.
 
-## 2. Tujuan Studi Kasus
+## 2. Tujuan Analisis dan Pemodelan C4.5
 
-Tujuan utama dari analisis ini adalah:
+Tujuan utama dari studi ini adalah:
 
-1.  **Mengkuantifikasi Hubungan:** Menentukan kekuatan dan arah hubungan antara tiga gejala terpilih (Suhu Tubuh, Nyeri Lumbar, Nyeri saat Berkemih) dengan dua diagnosis akhir.
-2.  **Membentuk Model Prediktif:** Mengembangkan model analitik yang dapat memprediksi, berdasarkan kombinasi gejala-gejala ini, apakah pasien lebih mungkin mengalami ISK Bawah (`Inflammation of urinary bladder`) atau ISK Atas (`Nephritis of renal pelvis origin`).
+1.  **Implementasi C4.5:** Menerapkan algoritma **Pohon Keputusan (Decision Tree) C4.5** pada dataset rekam medis pasien ISK (`UTI.csv`) untuk tugas klasifikasi.
+2.  **Identifikasi Fitur Kunci:** Mengukur efektivitas setiap gejala dalam memecah data menggunakan metrik **Gain Ratio** dari C4.5, untuk menentukan prediktor diagnosis yang paling kuat.
+3.  **Evaluasi Kinerja:** Mengukur kinerja model C4.5 melalui metrik standar data mining (Akurasi, Presisi, *Recall*, dan F1-Score) dalam memprediksi dua kelas diagnosis akhir.
 
-## 3. Sumber Data
+## 3. Sumber Data dan Rincian Algoritma
 
 | Detail | Deskripsi |
 | :--- | :--- |
 | **Nama Dataset** | `UTI.csv` |
-| **Tipe Data** | Data retrospektif pasien |
-| **Variabel Kunci** | **Gejala (Independen)**: `Temperature of patient` (kontinu), `Lumbar pain` (biner), `Micturition pains` (biner). |
-| **Hasil (Dependen)**: `Inflammation of urinary bladder` (biner) dan `Nephritis of renal pelvis origin` (biner). |
+| **Metode Pembelajaran** | *Supervised Learning* (Klasifikasi) |
+| **Algoritma Utama** | **C4.5 (Pohon Keputusan)** |
+| **Fitur Utama (Variabel Independen)** | `Temperature of patient`, `Lumbar pain`, `Micturition pains` (serta fitur gejala biner lainnya dalam dataset). |
+| **Kelas Target (Variabel Dependen)** | `Inflammation of urinary bladder` (ISK Bawah) dan `Nephritis of renal pelvis origin` (ISK Atas). |
 
-## 4. Metodologi Analisis (Rencana)
+## 4. Metodologi Pemodelan C4.5
 
-Untuk menganalisis pengaruh gejala terhadap kemungkinan diagnosis, metodologi yang akan diterapkan meliputi:
+Implementasi algoritma C4.5 akan mengikuti langkah-langkah berikut:
 
-1.  **Analisis Deskriptif:** Menghitung statistik deskriptif (rata-rata, standar deviasi) untuk `Temperature of patient`, dikelompokkan berdasarkan hasil diagnosis (ISK Bawah vs. ISK Atas).
-2.  **Analisis Korelasi:** Menghitung korelasi antara gejala biner (`Lumbar pain`, `Micturition pains`) dengan kedua hasil diagnosis.
-3.  **Pemodelan Regresi Logistik Multinominal:** Membangun model prediksi untuk mengestimasi probabilitas diagnosis ISK Bawah dan ISK Atas sebagai fungsi dari ketiga gejala. Koefisien model ini akan mengukur seberapa besar peningkatan/penurunan kemungkinan kejadian setiap diagnosis akibat adanya gejala tertentu.
+1.  **Preprocessing Data:** Memastikan data bersih, menangani nilai yang hilang (jika ada), dan mengubah variabel kontinu (`Temperature of patient`) menjadi diskrit (jika diperlukan oleh implementasi C4.5 tertentu).
+2.  **Pembentukan Pohon:** C4.5 akan melatih pohon keputusannya dengan memilih atribut pada setiap *node* yang menghasilkan *Gain Ratio* tertinggi. `Lumbar pain` dan `Temperature of patient` diharapkan menjadi *node* percabangan awal yang krusial.
+3.  **Pruning:** Melakukan pemangkasan (pruning) pada pohon yang telah dibangun untuk menghindari *overfitting* dan meningkatkan kemampuan generalisasi model pada data baru.
+4.  **Validasi:** Menguji model yang telah di-*pruning* menggunakan teknik *cross-validation* atau set data *holdout* untuk menghasilkan **Matriks Kebingungan (Confusion Matrix)**.
 
-## 5. Hipotesis dan Hasil yang Diharapkan
+## 5. Hasil yang Diharapkan dan Implikasi Klinis
 
-Berdasarkan pengetahuan klinis umum, studi ini mengharapkan hasil sebagai berikut:
+### Hasil yang Diharapkan
 
-* **Nyeri Lumbar:** Gejala ini dihipotesiskan memiliki pengaruh positif yang **signifikan** terhadap kemungkinan diagnosis **ISK Atas (Nefropati)**, karena nyeri pinggang sering mengindikasikan infeksi telah mencapai ginjal.
-* **Nyeri saat Berkemih (Micturition Pains):** Gejala ini dihipotesiskan memiliki pengaruh positif yang **kuat** terhadap diagnosis **ISK Bawah**, karena rasa sakit saat buang air kecil adalah gejala klasik dari sistitis.
-* **Suhu Tubuh:** Diperkirakan bahwa `Temperature of patient` akan **secara signifikan lebih tinggi** pada kelompok dengan **ISK Atas** dibandingkan dengan ISK Bawah.
+* Model C4.5 diharapkan menghasilkan **pohon keputusan yang ringkas** dan mudah diinterpretasikan.
+* Pohon tersebut akan menyediakan **aturan IF-THEN** yang transparan, misalnya: "JIKA `Lumbar pain` = Ya AND `Temperature of patient` > 38.5, MAKA Diagnosis = Nefropati (ISK Atas)."
 
-## 6. Kesimpulan dan Implikasi
+### Implikasi Praktis
 
-Analisis ini akan menghasilkan model yang *tervalidasi secara data* mengenai peran tiga gejala kunci dalam membedakan ISK Bawah dari ISK Atas.
-
-**Implikasi Praktis:**
-
-Hasil studi ini dapat digunakan oleh dokter umum atau tenaga medis di layanan kesehatan primer sebagai panduan diagnostik awal yang non-invasif. Dengan cepat mengevaluasi **Suhu Tubuh**, keberadaan **Nyeri Lumbar**, dan **Nyeri saat Berkemih**, petugas kesehatan dapat lebih akurat menentukan jalur pengobatan dan kebutuhan rujukan, sehingga mengoptimalkan manajemen pasien dan mencegah komplikasi serius.
+Model C4.5 menawarkan transparansi yang lebih baik daripada model *black-box* lainnya. Model yang akurat ini dapat berfungsi sebagai **sistem pendukung keputusan klinis (CDSS)** di fasilitas kesehatan primer. Dengan cepat memproses gejala pasien, sistem dapat memberikan prediksi diagnosis dini (ISK Bawah vs. Atas) yang objektif, membantu tenaga medis mempercepat pengambilan keputusan pengobatan yang tepat.
