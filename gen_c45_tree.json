@@ -1,0 +1,44 @@
+{
+  "type": "internal",
+  "attribute": "Urine pushing (continuous need for urination)",
+  "samples": 120,
+  "gain_ratio": 0.48583,
+  "children": {
+    "no": {
+      "type": "leaf",
+      "value": "no",
+      "samples": 40
+    },
+    "yes": {
+      "type": "internal",
+      "attribute": "Micturition pains",
+      "samples": 80,
+      "gain_ratio": 0.497285,
+      "children": {
+        "no": {
+          "type": "internal",
+          "attribute": "Lumbar pain",
+          "samples": 31,
+          "gain_ratio": 1.0,
+          "children": {
+            "no": {
+              "type": "leaf",
+              "value": "yes",
+              "samples": 10
+            },
+            "yes": {
+              "type": "leaf",
+              "value": "no",
+              "samples": 21
+            }
+          }
+        },
+        "yes": {
+          "type": "leaf",
+          "value": "yes",
+          "samples": 49
+        }
+      }
+    }
+  }
+}

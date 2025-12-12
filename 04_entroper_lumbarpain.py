@@ -2,7 +2,7 @@ import pandas as pd
 import math
 
 # Baca data langsung dari CSV
-df = pd.read_csv(r'UTI-Diagnosis-Predictor-main\UTI.csv')
+df = pd.read_csv(r'UTI Diagnosis Predictor\UTI.csv')
 
 # Hitung jumlah setiap temperature
 lumbarpain_counts = df['Lumbar pain'].value_counts().sort_index()

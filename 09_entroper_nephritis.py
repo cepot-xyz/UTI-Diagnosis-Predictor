@@ -2,7 +2,7 @@ import pandas as pd
 import math
 
 # Baca data langsung dari CSV
-df = pd.read_csv(r'UTI-Diagnosis-Predictor-main\UTI.csv')
+df = pd.read_csv(r'UTI Diagnosis Predictor\UTI.csv')
 
 # Hitung jumlah setiap temperature
 nephritis_counts = df['Nephritis of renal pelvis origin'].value_counts().sort_index()

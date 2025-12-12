@@ -4,8 +4,8 @@ from typing import Sequence
 
 # Konfigurasi sederhana — ubah sesuai kebutuhan untuk atribut/target lain
 CSV_PATH = r'UTI.csv'
-ATTRIBUTE = 'Temperature of patient'  # contoh: 'Temperature of patient'
-TARGET = 'Nephritis of renal pelvis origin'  # kolom target untuk dihitung Gain
+ATTRIBUTE = 'Burning of urethra, itch, swelling of urethra outlet'  # contoh: 'Burning of urethra, itch, swelling of urethra outlet'
+TARGET = 'Nephritis of renal pelvis origin'  # kolom target untuk dihitung Gain Ratio
 
 
 def entropy_from_counts(counts: Sequence[int]) -> float:
@@ -31,19 +31,36 @@ def entropy_of_series(series: pd.Series) -> float:
     return entropy_from_counts(counts)
 
 
-def information_gain(df: pd.DataFrame, attribute: str, target: str) -> float:
-    """Hitung Information Gain: Gain(Target, Attribute).
+def split_information(df: pd.DataFrame, attribute: str) -> float:
+    """Hitung Split Information (Intrinsic Value).
+    
+    Rumus: SplitInfo(Attribute) = -sum(|Si|/|S| * log2(|Si|/|S|))
+    dimana Si adalah subset data untuk nilai atribut ke-i
+    """
+    total = len(df)
+    split_info = 0.0
+    
+    for attr_value, group in df.groupby(attribute):
+        weight = len(group) / total
+        if weight > 0:
+            split_info -= weight * math.log2(weight)
+    
+    return split_info
 
-    Alur ringkas:
+
+def information_gain_ratio(df: pd.DataFrame, attribute: str, target: str) -> tuple:
+    """Hitung Information Gain Ratio: Gain Ratio(Target, Attribute).
+
+    Alur:
     1. Hitung entropy target sebelum split (H_target).
     2. Bagi data berdasarkan tiap nilai attribute.
-    3. Untuk tiap grup, hitung entropy target di grup itu dan bobotnya.
+    3. Untuk tiap grup, hitung entropy target dan bobotnya.
     4. Entropy kondisional = jumlah(bobot * entropy_grup).
     5. Gain = H_target - H_kondisional.
+    6. Split Information = intrinsic value dari attribute.
+    7. Gain Ratio = Gain / Split Information.
 
-    Catatan: fungsi ini menganggap attribute bersifat diskret.
-    Untuk attribute numerik (mis. Temperature) pertimbangkan binning
-    atau mencari threshold terbaik terlebih dahulu.
+    Mengembalikan: (gain, split_info, gain_ratio)
     """
     # Entropy target sebelum splitting
     H_target = entropy_of_series(df[target])
@@ -53,6 +70,7 @@ def information_gain(df: pd.DataFrame, attribute: str, target: str) -> float:
     conditional_entropy = 0.0
     print(f"Entropy(Target={target}) = {H_target:.6f}\n")
     print(f"Membagi berdasarkan Attribute={attribute}")
+    
     for attr_value, group in df.groupby(attribute):
         weight = len(group) / total
         H_sub = entropy_of_series(group[target])
@@ -65,8 +83,21 @@ def information_gain(df: pd.DataFrame, attribute: str, target: str) -> float:
 
     gain = H_target - conditional_entropy
     print(f"\nEntropy kondisional H(Target|{attribute}) = {conditional_entropy:.6f}")
-    print(f"Information Gain(Target, {attribute}) = {gain:.6f}\n")
-    return gain
+    print(f"Information Gain(Target, {attribute}) = {gain:.6f}")
+    
+    # Hitung Split Information
+    split_info = split_information(df, attribute)
+    print(f"Split Information({attribute}) = {split_info:.6f}")
+    
+    # Hitung Gain Ratio
+    if split_info == 0:
+        gain_ratio = 0.0
+        print(f"\n⚠️  Split Information = 0, Gain Ratio tidak terdefinisi (set ke 0)")
+    else:
+        gain_ratio = gain / split_info
+        print(f"\nGain Ratio(Target, {attribute}) = {gain:.6f} / {split_info:.6f} = {gain_ratio:.6f}\n")
+    
+    return gain, split_info, gain_ratio
 
 
 def main():
@@ -80,7 +111,8 @@ def main():
         raise KeyError(f"Kolom target '{TARGET}' tidak ditemukan. Kolom tersedia: {list(df.columns)}")
 
     print(f"Memuat {len(df)} baris dari '{CSV_PATH}'")
-    information_gain(df, ATTRIBUTE, TARGET)
+    print("="*80)
+    gain, split_info, gain_ratio = information_gain_ratio(df, ATTRIBUTE, TARGET)
 
 
 if __name__ == '__main__':

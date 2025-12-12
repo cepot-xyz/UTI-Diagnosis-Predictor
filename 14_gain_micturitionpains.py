@@ -4,7 +4,7 @@ from typing import Sequence
 
 # Konfigurasi sederhana — ubah sesuai kebutuhan untuk atribut/target lain
 CSV_PATH = r'UTI.csv'
-ATTRIBUTE = 'Temperature of patient'  # contoh: 'Temperature of patient'
+ATTRIBUTE = 'Micturition pains'  # contoh: 'Micturition pains'
 TARGET = 'Nephritis of renal pelvis origin'  # kolom target untuk dihitung Gain
 
 

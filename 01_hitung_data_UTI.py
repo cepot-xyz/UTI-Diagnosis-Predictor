@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Baca CSV file
-csv_file = r'UTI-Diagnosis-Predictor-main\UTI.csv'
+csv_file = r'UTI.csv'
 df = pd.read_csv(csv_file)
 
 def count_column_values(dataframe, column_name):
