@@ -45,7 +45,7 @@ def predict_single(tree: dict, sample: dict) -> tuple:
 
 def get_input_from_user(df: pd.DataFrame, target: str) -> dict:
     """
-    Get input dari user untuk semua atribut kecuali target.
+    Get input dari user untuk semua atribut kecuali target dan Temperature.
     
     Parameters:
     -----------
@@ -58,7 +58,8 @@ def get_input_from_user(df: pd.DataFrame, target: str) -> dict:
     --------
     dict : {attribute: value}
     """
-    attributes = [col for col in df.columns if col != target]
+    # Skip target dan Temperature (tipe data double)
+    attributes = [col for col in df.columns if col != target and col != 'Temperature of patient']
     sample = {}
     
     print("\n" + "="*100)

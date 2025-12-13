@@ -3,7 +3,7 @@ import math
 from typing import Sequence
 
 CSV_PATH = r'UTI.csv'
-ATTRIBUTE = 'Burning of urethra, itch, swelling of urethra outlet'  # contoh: 'Burning of urethra, itch, swelling of urethra outlet'
+ATTRIBUTE = 'Nephritis of renal pelvis origin'  # contoh: 'Nephritis of renal pelvis origin'
 TARGET = 'Nephritis of renal pelvis origin'  # kolom target untuk dihitung Gain Ratio
 
 

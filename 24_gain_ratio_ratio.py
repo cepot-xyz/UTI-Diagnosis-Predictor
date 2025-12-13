@@ -2,8 +2,9 @@ import pandas as pd
 import math
 from typing import Sequence
 
+# Konfigurasi sederhana — ubah sesuai kebutuhan untuk atribut/target lain
 CSV_PATH = r'UTI.csv'
-ATTRIBUTE = 'Burning of urethra, itch, swelling of urethra outlet'  # contoh: 'Burning of urethra, itch, swelling of urethra outlet'
+ATTRIBUTE = 'Inflammation of urinary bladder'  # contoh: 'Inflammation of urinary bladder'
 TARGET = 'Nephritis of renal pelvis origin'  # kolom target untuk dihitung Gain Ratio
 
 

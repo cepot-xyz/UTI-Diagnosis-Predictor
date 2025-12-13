@@ -1,8 +1,5 @@
-n
-y
-n
-n
-y
-n
-n
-n
+- Occurance = y
+- Lumbar pain = n
+- Urine = n
+- Micturition pains = y
+- Burning itch swelling = n

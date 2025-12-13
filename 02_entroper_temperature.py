@@ -1,17 +1,14 @@
 import pandas as pd
 import math
 
-# Baca data langsung dari CSV
-df = pd.read_csv(r'UTI Diagnosis Predictor\UTI.csv')
+df = pd.read_csv(r'UTI.csv')
 
-# Hitung jumlah setiap temperature
 temperature_counts = df['Temperature of patient'].value_counts().sort_index()
 
 print(f"\n{'='*60}")
 print("Kolom: Temperature of patient")
 print(f"{'='*60}")
 
-# Loop untuk menampilkan setiap nilai
 total = 0
 for temp, count in temperature_counts.items():
     print(f"{temp}: {count}")
@@ -21,7 +18,6 @@ print(f"{'-'*60}")
 print(f"TOTAL: {total}")
 print(f"{'='*60}\n")
 
-# Hitung ENTROPY
 print(f"PERHITUNGAN ENTROPY:")
 print(f"{'='*60}")
 

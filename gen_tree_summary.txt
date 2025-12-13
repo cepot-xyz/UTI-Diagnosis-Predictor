@@ -1,0 +1,35 @@
+
+====================================================================================================
+C4.5 DECISION TREE - FINAL REPORT
+====================================================================================================
+
+TREE STATISTICS:
+  * Total Nodes: 7
+  * Internal Nodes (Decision): 3
+  * Leaf Nodes (Prediction): 4
+  * Tree Depth: 3
+
+DATASET INFORMATION:
+  * Total Samples: 120
+  * Target Variable: Inflammation of urinary bladder
+  * Class Distribution:
+    - no: 61 (50.83%)
+    - yes: 59 (49.17%)
+
+ROOT NODE (Best Split):
+  * Splitting Attribute: Urine pushing (continuous need for urination)
+  * Gain Ratio: 0.485830
+  * Samples: 120
+  * Number of Branches: 2
+
+INTERPRETATION:
+  The model identified "Urine pushing (continuous need for urination)" as the most important
+  feature for predicting Inflammation diagnosis. This attribute
+  provides the highest information gain ratio among all features.
+
+OUTPUT FILES GENERATED:
+  [OK] gen_c45_tree.json - Tree structure in JSON format
+  [OK] gen_uti_tree.png - Tree visualization (high-res)
+  [OK] gen_tree_summary.txt - This summary report
+
+====================================================================================================

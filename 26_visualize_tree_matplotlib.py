@@ -44,7 +44,7 @@ class TreeVisualizer:
             child_x = x - layer_width / 2 + (i + 1) * child_x_offset
             self.calculate_positions(child, child_x, child_y, layer_width / 2)
     
-    def draw_node(self, node_id: int, node: dict, parent_id: int = None, 
+    def draw_node(self, node_id: int, node: dict, parent_id: int = None, # type: ignore
                   branch_value: str = "") -> int:
         """Draw single node dan connectionnya."""
         x, y = self.node_positions[node_id]
@@ -58,7 +58,7 @@ class TreeVisualizer:
             # Internal node - warna biru
             color = 'lightblue'
             edgecolor = 'darkblue'
-            attr_short = node['attribute'][:30]  # Shorten long names
+            attr_short = node['attribute'][:30]  
             label = f"{attr_short}\nGR: {node['gain_ratio']:.3f}\n(n={node['samples']})"
         
         # Draw box
@@ -69,10 +69,10 @@ class TreeVisualizer:
             facecolor=color,
             linewidth=2
         )
-        self.ax.add_patch(bbox)
+        self.ax.add_patch(bbox) # type: ignore
         
         # Draw text
-        self.ax.text(x, y, label, ha='center', va='center', fontsize=8, weight='bold')
+        self.ax.text(x, y, label, ha='center', va='center', fontsize=8, weight='bold') # type: ignore
         
         # Draw edge dari parent
         if parent_id is not None:
@@ -85,12 +85,12 @@ class TreeVisualizer:
                 linewidth=1.5,
                 color='gray'
             )
-            self.ax.add_patch(arrow)
+            self.ax.add_patch(arrow) # type: ignore
             
             # Draw branch label
             mid_x = (parent_x + x) / 2
             mid_y = (parent_y + y) / 2
-            self.ax.text(mid_x + 0.15, mid_y, f"= {branch_value}", 
+            self.ax.text(mid_x + 0.15, mid_y, f"= {branch_value}",  # type: ignore
                         fontsize=7, style='italic', color='darkred')
         
         # Draw child nodes

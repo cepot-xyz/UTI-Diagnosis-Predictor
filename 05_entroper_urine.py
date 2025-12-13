@@ -2,7 +2,7 @@ import pandas as pd
 import math
 
 # Baca data langsung dari CSV
-df = pd.read_csv(r'UTI Diagnosis Predictor\UTI.csv')
+df = pd.read_csv(r'UTI.csv')
 
 # Hitung jumlah setiap temperature
 urine_counts = df['Urine pushing (continuous need for urination)'].value_counts().sort_index()
